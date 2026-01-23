@@ -1,10 +1,12 @@
 let DB_SERVICES = [];
 let servicesLoaded = false;
 const API_BASE =
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
+  window.location.hostname.includes("localhost") ||
+  window.location.hostname.includes("127.0.0.1")
     ? "http://localhost:5000"
-    : "https://your-backend-domain.com";
+    : "https://smart-align-app.onrender.com";
+
+
 
 async function getAllJobsFromDB() {
   const token = localStorage.getItem("token");
@@ -115,7 +117,7 @@ async function verifyOTP() {
  ADMIN LOGIN (FIXED)
 *********************************/
 function adminLogin() {
-  if (loginEmail.value === "admin" && loginPassword.value === "Admin@123") {
+  if (loginEmail.value === "superadmin" && loginPassword.value === "super$135") {
     localStorage.setItem("isAdmin", "true");
     localStorage.setItem("token", "ADMIN_TOKEN"); // 👈 ADD THIS
     location.href = "admin.html";

@@ -15,14 +15,15 @@ const router = express.Router();
    EMAIL CONFIG (GMAIL)
 ====================== */
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   }
 });
+
 
 transporter.verify((err) => {
   if (err) console.error("EMAIL ERROR:", err);
@@ -47,14 +48,16 @@ router.post("/send-otp", async (req, res) => {
       expiresAt: new Date(Date.now() + 5 * 60 * 1000)
     });
 
-   await transporter.sendMail({
+await transporter.sendMail({
+  from: `"Smart Align" <no-reply@smartalignbiz.netlify.app>`,
   to: email,
   subject: "Your Smart Align OTP",
   html: otpEmailTemplate({
-    name: "User", // or pass name if you want
+    name: "User",
     otp
   })
 });
+
 
 
     res.json({ message: "OTP sent to email" });
@@ -169,7 +172,8 @@ router.post("/forgot-password", async (req, res) => {
     const link = `${process.env.FRONTEND_URL}/reset.html?token=${token}`;
 
    await transporter.sendMail({
-  from: process.env.EMAIL_USER,
+ from: `"Smart Align" <no-reply@smartalignbiz.netlify.app>`,
+
   to: email,
   subject: "Reset Your Smart Align Password",
   html: resetPasswordTemplate({
