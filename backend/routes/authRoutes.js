@@ -8,6 +8,19 @@ const { resetPasswordTemplate } = require("../utils/resetPasswordTemplate");
 const { otpEmailTemplate } = require("../utils/otpTemplate");
 const User = require("../models/user");
 const Otp = require("../models/Otp");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
+
+const client = SibApiV3Sdk.ApiClient.instance;
+client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+await tranEmailApi.sendTransacEmail({
+  sender: { email: "no-reply@smartalignbiz.netlify.app", name: "Smart Align" },
+  to: [{ email }],
+  subject: "Your OTP Code",
+  htmlContent: otpTemplate(otp)
+});
+
+
 
 const router = express.Router();
 
