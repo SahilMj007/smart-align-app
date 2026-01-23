@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Advisor Incentive Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      if (!localStorage.getItem("isAdmin")) {
+        window.location.href = "index.html";
+      }
+    </script>
+  </head>
+  <body>
+     <div class="navbar">
+      <div class="nav-left">
+        <span class="logo">Smart Align</span>
+      </div>
+
+      <!-- desktop nav -->
+      <div class="nav-right desktop-only">
+        <span id="welcomeUser" class="welcome-text"></span>
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+        <button class="btn btn-outline" onclick="location.href = 'about.html'">
+          About Us
+        </button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <!-- mobile menu button -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
+
+    <!-- mobile menu -->
+    <div
+      id="mobileMenuOverlay"
+      class="mobile-overlay"
+      onclick="toggleMobileMenu()"
+    ></div>
+
+    <div id="mobileMenu" class="mobile-menu right-menu">
+      <div class="welcome-text" id="mobileWelcome"></div>
+
+      <button onclick="toggleTheme()">🌙 Theme</button>
+      <button onclick="location.href = 'about.html'">About Us</button>
+      <button class="danger" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2 class="page-title">Advisor Incentive Report</h2>
+
+        <div class="grid-3">
+          <select id="period" onchange="loadIncentiveReport()">
+            <option value="day">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+            <option value="custom">Custom</option>
+          </select>
+
+          <input type="date" id="fromInc" />
+          <input type="date" id="toInc" />
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Advisor</th>
+                <th>Front Wheel</th>
+                <th>Rear Wheel</th>
+                <th>Alignment</th>
+                <th>Total Incentive (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="incentiveTable"></tbody>
+          </table>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-outline" onclick="goBackFromIncentive()">
+            ⬅ Back
+          </button>
+          <button class="btn btn-primary" onclick="window.print()">
+            Print
+          </button>
+          <button class="btn btn-primary" onclick="exportIncentiveExcel()">
+            Export to Excel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      loadIncentiveReport();
+    </script>
+  </body>
+</html>

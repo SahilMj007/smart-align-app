@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "index.html";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
+        <span class="logo">Smart Align</span>
+      </div>
+
+      <!-- desktop nav -->
+      <div class="nav-right desktop-only">
+        <span id="welcomeUser" class="welcome-text"></span>
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+        <button class="btn btn-outline" onclick="location.href = 'about.html'">
+          About Us
+        </button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <!-- mobile menu button -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
+
+    <!-- mobile menu -->
+    <div
+      id="mobileMenuOverlay"
+      class="mobile-overlay"
+      onclick="toggleMobileMenu()"
+    ></div>
+
+    <div id="mobileMenu" class="mobile-menu right-menu">
+      <div class="welcome-text" id="mobileWelcome"></div>
+
+      <button onclick="toggleTheme()">🌙 Theme</button>
+      <button onclick="location.href = 'about.html'">About Us</button>
+      <button class="danger" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2 class="page-title">Smart Entry</h2>
+
+        <div class="grid-2">
+          <div>
+            <label>Vehicle Number</label>
+            <input id="vehicleNo" placeholder="Vehicle Number" />
+          </div>
+          <div>
+            <label>Job Card Number</label>
+            <input id="jobCardNo" placeholder="Job Card Number" />
+          </div>
+          <div>
+            <label>Advisor Name</label>
+            <input id="advisor" placeholder="Advisor Name" />
+          </div>
+          <div>
+            <label>Technician Name</label>
+            <input id="technician" placeholder="Technician Name" />
+          </div>
+        </div>
+
+        <h3>Services</h3>
+
+        <div class="service-list">
+          <label class="service-item">
+            <input
+              type="checkbox"
+              id="frontBalancing"
+              onchange="calculateAmount()"
+            />
+            <span class="service-name">Front Wheel Balancing</span>
+            <span class="service-price" id="price-front">₹0</span>
+          </label>
+
+          <label class="service-item">
+            <input
+              type="checkbox"
+              id="rearBalancing"
+              onchange="calculateAmount()"
+            />
+            <span class="service-name">Rear Wheel Balancing</span>
+            <span class="service-price" id="price-rear">₹0</span>
+          </label>
+
+          <label class="service-item">
+            <input
+              type="checkbox"
+              id="shockerAlignment"
+              onchange="calculateAmount()"
+            />
+            <span class="service-name">Shocker Alignment</span>
+            <span class="service-price" id="price-shock">₹0</span>
+          </label>
+        </div>
+
+        <h3>Amount Details</h3>
+        <div class="grid-3">
+          <input id="amountWithoutGST" placeholder="Without GST" readonly />
+          <input id="gstAmount" placeholder="GST Amount" readonly />
+          <input id="totalAmount" placeholder="Total Amount" readonly />
+        </div>
+
+        <div id="editDateTimeBox" style="display: none" class="edit-datetime">
+          <label>Edit Date</label>
+          <input type="date" id="editDate" />
+
+          <label>Edit Time</label>
+          <input type="time" id="editTime" />
+        </div>
+
+        <label>Remarks</label>
+        <textarea id="remarks"></textarea>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="saveJob()">Save Data</button>
+          <button class="btn btn-outline" onclick="goToJobs()">
+            View Jobs
+          </button>
+          <button
+            class="btn btn-outline"
+            onclick="location.href = 'performance.html'"
+          >
+            Performance
+          </button>
+          <button
+            class="btn btn-outline"
+            onclick="location.href = 'advisor-incentive.html'"
+          >
+            Incentives
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      loadEditJob();
+      loadServicePricesInDashboard();
+    </script>
+  </body>
+</html>

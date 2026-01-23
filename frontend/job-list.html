@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Job List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+   <div class="navbar">
+      <div class="nav-left">
+        <span class="logo">Smart Align</span>
+      </div>
+
+      <!-- desktop nav -->
+      <div class="nav-right desktop-only">
+        <span id="welcomeUser" class="welcome-text"></span>
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+        <button class="btn btn-outline" onclick="location.href = 'about.html'">
+          About Us
+        </button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <!-- mobile menu button -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
+
+    <!-- mobile menu -->
+    <div
+      id="mobileMenuOverlay"
+      class="mobile-overlay"
+      onclick="toggleMobileMenu()"
+    ></div>
+
+    <div id="mobileMenu" class="mobile-menu right-menu">
+      <div class="welcome-text" id="mobileWelcome"></div>
+
+      <button onclick="toggleTheme()">🌙 Theme</button>
+      <button onclick="location.href = 'about.html'">About Us</button>
+      <button class="danger" onclick="logout()">Logout</button>
+    </div>
+  
+<div id="globalLoader" class="spinner">
+  <div class="loader-box">
+    <div class="loader"></div>
+    <p>Loading, please wait...</p>
+  </div>
+</div>
+
+ 
+<div class="page">
+  <div class="card">
+
+    <h2 class="page-title">Saved Smart Data</h2>
+
+    <input
+  type="text"
+  id="searchInput"
+  placeholder="Search by Vehicle No or Job Card No"
+  onkeyup="searchJob()"
+/>
+<button class="btn btn-primary" onclick="toggleExportPanel()">
+  📤 Export
+</button>
+
+
+<div id="exportPanel" class="export-panel" style="display:none">
+
+  <h3>Export Data</h3>
+
+  <div class="grid-2">
+    <div>
+      <label>From Date</label>
+      <input type="date" id="fromDate">
+    </div>
+    <div>
+      <label>To Date</label>
+      <input type="date" id="toDate">
+    </div>
+  </div>
+
+  <div class="export-section">
+    <h4>Select Columns</h4>
+    <div class="export-columns">
+      <label><input type="checkbox" class="colExport" value="sno" checked> S.No</label>
+      <label><input type="checkbox" class="colExport" value="advisor"> Advisor</label>
+      <label><input type="checkbox" class="colExport" value="jobCard"> Job Card</label>
+      <label><input type="checkbox" class="colExport" value="front"> Front Wheel</label>
+      <label><input type="checkbox" class="colExport" value="rear"> Rear Wheel</label>
+      <label><input type="checkbox" class="colExport" value="align"> Alignment</label>
+      <label><input type="checkbox" class="colExport" value="vehicle"> Vehicle</label>
+      <label><input type="checkbox" class="colExport" value="technician"> Technician</label>
+      <label><input type="checkbox" class="colExport" value="date"> Date</label>
+      <label><input type="checkbox" class="colExport" value="total"> Total Amount</label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="exportCustomData()">Export</button>
+    <button class="btn btn-outline" onclick="toggleExportPanel()">Cancel</button>
+  </div>
+
+</div>
+
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Job Card</th>
+              <th>Advisor</th>
+              <th>Technician</th>
+              <th>Front</th>
+              <th>Rear</th>
+              <th>Align</th>
+              <th>Without GST</th>
+              <th>GST</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+      
+          <tbody id="jobTableBody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+
+    <div class="actions">
+      <button class="btn btn-outline" onclick="clearSearchAndBack()">⬅ Back</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "index.html";
+  } else {
+    loadJobs();
+  }
+</script>
+
+</body>
+</html>

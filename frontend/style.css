@@ -1,0 +1,852 @@
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+
+/* ==============================
+   DESIGN SYSTEM – PROFESSIONAL
+============================== */
+
+:root {
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --danger: #dc2626;
+  --border: #e2e8f0;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #111827;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --border: #1f2937;
+}
+
+/* ==============================
+   BASE
+============================== */
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ==============================
+   LAYOUT
+============================== */
+.page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ==============================
+   GRID
+============================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==============================
+   INPUTS
+============================== */
+label {
+  font-size: 13px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+
+textarea {
+  min-height: 80px;
+}
+
+/* ==============================
+   BUTTON SYSTEM
+============================== */
+.btn {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-small {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+}
+
+/* ==============================
+   ACTIONS
+============================== */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* ==============================
+   TABLE
+============================== */
+/* ==============================
+   PROFESSIONAL TABLE
+============================== */
+.table-wrapper {
+  margin-top: 24px;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+}
+
+thead th {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #2563eb;
+  color: white;
+  padding: 14px 12px;
+}
+
+tbody td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+/* left align first column (names) */
+tbody td:first-child,
+thead th:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+
+/* number alignment */
+tbody td:not(:first-child) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* empty state */
+.table-empty {
+  text-align: center;
+  padding: 30px;
+  color: var(--muted);
+}
+
+
+/* job list actions */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-buttons button {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  padding: 0;
+}
+
+.table-wrapper {
+  margin-top: 24px;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+
+/* ==============================
+   TOGGLE
+============================== */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 18px;
+  z-index: 999;
+}
+
+/* ==============================
+   AUTH PAGES (LOGIN / SIGNUP)
+============================== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;   /* 👈 THIS FIXES WIDTH */
+  padding: 32px;
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.auth-container h2 {
+  margin-bottom: 6px;
+}
+
+.auth-container p {
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.auth-container input {
+  margin-bottom: 14px;
+}
+
+.auth-container .actions {
+  flex-direction: column;
+}
+
+.auth-container .btn {
+  width: 100%;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* ==============================
+   FINAL PROFESSIONAL NAVBAR
+============================== */
+.navbar {
+  height: 64px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* icon button */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.icon-btn:hover {
+  background: var(--border);
+}
+
+/* logout button */
+.logout-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+.page {
+  margin-top: 24px;
+}
+
+/* ==============================
+   GLOBAL SPACING FIX
+============================== */
+
+/* section spacing */
+.card > h2,
+.card > h3 {
+  margin-bottom: 20px;
+}
+
+.card > .grid-2,
+.card > .grid-3,
+.card > .table-wrapper,
+.card > .actions,
+.card > textarea,
+.card > input,
+.card > select {
+  margin-bottom: 20px;
+}
+
+/* form field spacing */
+.grid-2 > div,
+.grid-3 > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* labels spacing */
+label {
+  margin-top: 8px;
+}
+
+/* checkbox spacing */
+input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+label input[type="checkbox"] {
+  margin-bottom: 8px;
+}
+
+/* actions spacing */
+.actions {
+  margin-top: 24px;
+}
+
+/* table spacing */
+.table-wrapper {
+  margin-top: 24px;
+}
+
+/* auth spacing */
+.auth-container input {
+  margin-bottom: 16px;
+}
+
+.auth-container button {
+  margin-top: 12px;
+}
+
+/* ==============================
+   SERVICE CHECKBOX ALIGNMENT
+============================== */
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--card);
+  transition: 0.2s;
+}
+
+.service-item:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.service-item input {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==============================
+   SERVICE ROW WITH PRICE
+============================== */
+.service-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.service-item:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.service-name {
+  font-weight: 500;
+}
+
+.service-price {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* ==============================
+   MOBILE NAVBAR
+============================== */
+.mobile-menu-btn {
+  display: none;
+  font-size: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 12px;
+}
+
+.mobile-menu button {
+  padding: 12px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+.mobile-menu button:hover {
+  background: var(--border);
+}
+
+.mobile-menu .danger {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+#chartBox {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+/* ==============================
+   EXPORT COLUMN CHECKBOX ALIGNMENT
+============================== */
+.export-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.export-columns label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--card);
+}
+
+.export-columns input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.welcome-text {
+  font-weight: 600;
+  margin-right: 15px;
+  color: var(--primary);
+}
+
+/* mobile only */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+
+/* ==============================
+   PRINT
+============================== */
+@media print {
+  button, select, input {
+    display: none !important;
+  }
+}
+
+/* ==============================
+   FINAL RESPONSIVE POLISH
+   (Mobile + Tablet + All Devices)
+============================== */
+
+/* ---------- MOBILE (<= 480px) ---------- */
+@media (max-width: 480px) {
+
+  .page {
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .page-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  /* buttons full width on mobile */
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  /* tables readable on mobile */
+  table {
+    font-size: 12px;
+  }
+
+  thead th,
+  tbody td {
+    padding: 10px 8px;
+  }
+
+  /* service items compact */
+  .service-item {
+    padding: 10px;
+  }
+
+  .service-name {
+    font-size: 14px;
+  }
+
+  .service-price {
+    font-size: 14px;
+  }
+}
+
+
+/* ---------- TABLET (<= 768px) ---------- */
+@media (max-width: 768px) {
+
+  .page {
+    max-width: 100%;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px;
+  }
+
+  .nav-left,
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .service-item {
+    grid-template-columns: auto 1fr;
+    row-gap: 6px;
+  }
+
+  .service-price {
+    grid-column: 2;
+    text-align: right;
+  }
+}
+
+
+/* ---------- LARGE SCREENS (>= 1400px) ---------- */
+@media (min-width: 1400px) {
+  .page {
+    max-width: 1300px;
+  }
+}
+
+#exportBox {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.export-panel {
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.export-panel h3 {
+  margin-bottom: 12px;
+}
+
+.export-section {
+  margin-top: 16px;
+}
+
+.export-section h4 {
+  margin-bottom: 8px;
+}
+
+
+.chart-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin-top: 24px;
+  animation: fadeUp 0.4s ease;
+}
+
+.dark .chart-card {
+  background: #1e1e1e;
+}
+
+.spinner {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45); /* matches dark bg */
+  display: none; /* IMPORTANT */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-box {
+  background: var(--card);
+  padding: 28px 36px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.loader-box p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+
+
+.spinner p {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==============================
+   RIGHT SLIDE MOBILE MENU
+============================== */
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 998;
+}
+
+.mobile-menu.right-menu {
+  position: fixed;
+  top: 0;
+  right: -280px; /* hidden */
+  width: 260px;
+  height: 100%;
+  background: var(--card);
+  box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+  transition: right 0.3s ease;
+}
+
+.mobile-menu.right-menu.open {
+  right: 0;
+}
+
+/* ==============================
+   FIX MOBILE MENU BUTTON POSITION
+============================== */
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+
+  .mobile-menu-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-left {
+    width: 100%;
+    text-align: left;
+  }
+}

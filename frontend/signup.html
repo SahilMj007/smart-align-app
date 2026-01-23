@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+<!-- 🔄 Loader -->
+<div id="globalLoader" class="spinner">
+  <div class="loader-box">
+    <div class="loader"></div>
+    <p>Loading, please wait...</p>
+  </div>
+</div>
+
+
+
+<div class="auth-container">
+
+  <h2 class="page-title" style="text-align:center">Create Account</h2>
+  <p>Signup to start using the system</p>
+
+  <label>Name</label>
+  <input id="name" placeholder="Full name">
+
+  <label>Email</label>
+  <input id="email" type="email" placeholder="Email address">
+
+  <label>Phone Number</label>
+  <input id="phone" type="tel" placeholder="10 digit mobile number">
+
+
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Strong password">
+
+  <button class="btn btn-primary" type="button" onclick="sendOTP(this)">Send OTP</button>
+
+  <div id="otpBox" style="display:none">
+    <label>Enter OTP</label>
+    <input id="otpInput" placeholder="6 digit OTP">
+    <button class="btn btn-primary" onclick="verifyOTP()">Verify OTP</button>
+  </div>
+
+  <div class="auth-footer">
+    Already have account?
+    <a href="index.html" style="color:var(--primary);font-weight:600">
+      Login
+    </a>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
