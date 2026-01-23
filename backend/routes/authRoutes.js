@@ -2,50 +2,14 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 
 const { resetPasswordTemplate } = require("../utils/resetPasswordTemplate");
 const { otpEmailTemplate } = require("../utils/otpTemplate");
 const User = require("../models/user");
 const Otp = require("../models/Otp");
-const SibApiV3Sdk = require("sib-api-v3-sdk");
-
-const client = SibApiV3Sdk.ApiClient.instance;
-client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
-
-await tranEmailApi.sendTransacEmail({
-  sender: { email: "no-reply@smartalignbiz.netlify.app", name: "Smart Align" },
-  to: [{ email }],
-  subject: "Your OTP Code",
-  htmlContent: otpTemplate(otp)
-});
-
-
 
 const router = express.Router();
-
-/* ======================
-   EMAIL CONFIG (GMAIL)
-====================== */
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT), // ✅ number
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
-
-
-transporter.verify((err) => {
-  if (err) console.error("EMAIL ERROR:", err);
-  else console.log("EMAIL SERVER READY");
-});
 
 /* ======================
    SEND OTP
@@ -62,24 +26,31 @@ router.post("/send-otp", async (req, res) => {
     await Otp.create({
       email,
       otp,
-      expiresAt: new Date(Date.now() + 5 * 60 * 1000)
+      expiresAt: Date.now() + 5 * 60 * 1000
     });
 
-await transporter.sendMail({
-  from: `"Smart Align" <no-reply@smartalignbiz.netlify.app>`,
-  to: email,
-  subject: "Your Smart Align OTP",
-  html: otpEmailTemplate({
-    name: "User",
-    otp
-  })
-});
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: process.env.SENDER_NAME,
+          email: process.env.SENDER_EMAIL
+        },
+        to: [{ email }],
+        subject: "Your Smart Align OTP",
+        htmlContent: otpEmailTemplate({ otp })
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
-
-
-    res.json({ message: "OTP sent to email" });
+    res.json({ message: "OTP sent successfully" });
   } catch (err) {
-    console.error(err);
+    console.error("OTP ERROR:", err.response?.data || err.message);
     res.status(500).json({ message: "Failed to send OTP" });
   }
 });
@@ -113,13 +84,12 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
 
-
     if (!name || !email || !phone || !password)
       return res.status(400).json({ message: "All fields required" });
 
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: "Email already exists" });
-    
+
     const hash = await bcrypt.hash(password, 10);
 
     await User.create({
@@ -184,28 +154,36 @@ router.post("/forgot-password", async (req, res) => {
     user.resetToken = token;
     user.resetExpires = Date.now() + 15 * 60 * 1000;
     await user.save({ validateBeforeSave: false });
-  
 
     const link = `${process.env.FRONTEND_URL}/reset.html?token=${token}`;
 
-   await transporter.sendMail({
- from: `"Smart Align" <no-reply@smartalignbiz.netlify.app>`,
-
-  to: email,
-  subject: "Reset Your Smart Align Password",
-  html: resetPasswordTemplate({
-    name: user.name,
-    link
-  })
-});
-
-
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: process.env.SENDER_NAME,
+          email: process.env.SENDER_EMAIL
+        },
+        to: [{ email }],
+        subject: "Reset your Smart Align password",
+        htmlContent: resetPasswordTemplate({
+          name: user.name,
+          link
+        })
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
     res.json({ message: "Reset link sent" });
   } catch (err) {
-  console.error("FORGOT PASSWORD ERROR:", err);
-  res.status(500).json({ message: err.message });
-}
+    console.error("FORGOT PASSWORD ERROR:", err.response?.data || err.message);
+    res.status(500).json({ message: "Failed to send reset link" });
+  }
 });
 
 /* ======================
@@ -227,7 +205,6 @@ router.post("/reset-password", async (req, res) => {
     user.resetToken = undefined;
     user.resetExpires = undefined;
     await user.save({ validateBeforeSave: false });
-
 
     res.json({ message: "Password updated successfully" });
   } catch (err) {
