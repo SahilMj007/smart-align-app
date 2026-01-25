@@ -34,4 +34,8 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+jobSchema.index({ vehicle: 1, jobCard: 1 });
+jobSchema.index({ entryDate: 1 });
+jobSchema.index({ createdBy: 1 });
+
 module.exports = mongoose.model("Job", jobSchema);

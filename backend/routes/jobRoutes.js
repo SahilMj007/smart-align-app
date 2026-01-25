@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Job = require("../models/Job");
 const auth = require("../middleware/auth");
-
 const router = express.Router();
 
 /* ===============================
@@ -15,8 +14,34 @@ router.get("/", auth, async (req, res) => {
         ? {}
         : { createdBy: req.user.id };
 
-    const jobs = await Job.find(filter).sort({ createdAt: -1 });
-    res.json(jobs);
+        const search = req.query.search;
+
+if (search) {
+  filter.$or = [
+    { vehicle: { $regex: search, $options: "i" } },
+    { jobCard: { $regex: search, $options: "i" } }
+  ];
+}
+
+const page = Number(req.query.page) || 1;
+const limit = Number(req.query.limit) || 25;
+const skip = (page - 1) * limit;
+
+const jobs = await Job.find(filter)
+  .sort({ createdAt: -1 })
+  .skip(skip)
+  .limit(limit)
+  .lean();
+
+const total = await Job.countDocuments(filter);
+
+res.json({
+  jobs,
+  total,
+  page,
+  pages: Math.ceil(total / limit)
+});
+
   } catch (err) {
     console.error("GET jobs error:", err);
     res.status(500).json({ message: "Internal server error" });
@@ -97,5 +122,33 @@ router.delete("/:id", auth, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
+router.get("/export/all", auth, async (req, res) => {
+  try {
+    const { from, to, search } = req.query;
+
+    let filter =
+      req.user.role === "admin"
+        ? {}
+        : { createdBy: req.user.id };
+
+    if (from) filter.entryDate = { $gte: from };
+    if (to) filter.entryDate = { ...filter.entryDate, $lte: to };
+
+    if (search) {
+      filter.$or = [
+        { vehicle: { $regex: search, $options: "i" } },
+        { jobCard: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    const jobs = await Job.find(filter).sort({ createdAt: -1 }).lean();
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ message: "Export failed" });
+  }
+});
+
 
 module.exports = router;
