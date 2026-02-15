@@ -1,25 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Forgot Password</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="auth-page">
+  <head>
+    <title>Forgot Password | Smart Align</title>
+    <link rel="canonical" href="https://smartalignbiz.netlify.app/forgot.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
 
-<div class="auth-container">
-  <h2>Forgot Password</h2>
-  <p>Enter your registered email</p>
+    <meta name="robots" content="index, follow" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-container">
+      <h1>Forgot Password - Smart Align</h1>
+      <p>Enter your registered email</p>
 
-  <input id="forgotEmail" placeholder="Email address">
+      <input id="forgotEmail" placeholder="Email address" />
 
-  <button class="btn btn-primary" onclick="sendResetLink()">Send Reset Link</button>
+      <button class="btn btn-primary" onclick="sendResetLink()">
+        Send Reset Link
+      </button>
 
-  <div class="auth-footer">
-    <a href="index.html" class="btn btn-primary" style="text-decoration: none;">⬅ Back to login</a>
-  </div>
-</div>
+      <div class="auth-footer">
+        <a
+          href="index.html"
+          class="btn btn-primary"
+          style="text-decoration: none"
+          >⬅ Back to login</a
+        >
+      </div>
+    </div>
 
-<script src="script.js"></script>
-</body>
+    <!-- 🔄 Global Loader -->
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

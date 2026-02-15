@@ -1,52 +1,178 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
-  }
-</script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Smart Align – Workshop Data Management System</title>
+    <link rel="canonical" href="https://smartalignbiz.netlify.app/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+      }
+    </script>
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
 
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="auth-page">
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Smart Align – Data Management System" />
+    <meta
+      property="og:description"
+      content="Manage wheel alignment & balancing jobs, advisors, technicians and billing with Smart Align."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smartalignbiz.netlify.app/" />
+    <meta
+      property="og:image"
+      content="https://smartalignbiz.netlify.app/promologo.png"
+    />
+  </head>
 
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <body class="home-page">
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="nav-left">
+        <span class="logo">Smart Align</span>
+      </div>
 
-<div class="auth-container">
+      <!-- desktop nav -->
+      <div class="nav-right desktop-only">
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Create Account</a>
+      </div>
 
-  <h2 class="page-title" style="text-align:center">Smart Entry – Data Ready</h2>
-  <p>Login to continue</p>
-<form onsubmit="event.preventDefault(); login();">
-  <label>Email</label>
-  <input id="loginEmail" placeholder="Enter your email">
+      <!-- mobile menu button -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
 
-  <label>Password</label>
-  <input id="loginPassword" type="password" placeholder="Enter your password">
+    <!-- mobile overlay -->
+    <div
+      id="mobileMenuOverlay"
+      class="mobile-overlay"
+      onclick="toggleMobileMenu()"
+    ></div>
 
-  <div style="text-align:right; margin-top:8px;">
-  <a href="forgot.html" style="color:var(--primary); font-size:14px;">
-    Forgot password?
-  </a>
-</div>
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="mobile-menu right-menu">
+      <button onclick="toggleTheme()">🌙 Theme</button>
+      <button onclick="location.href = 'login.html'">Login</button>
+      <button onclick="location.href = 'signup.html'">Create Account</button>
+    </div>
 
-  <div class="actions">
-    <button class="btn btn-primary" type="submit">Login</button>
-    <button class="btn btn-outline" onclick="adminLogin()">Admin Login</button>
-  </div>
-  </form>
+    <!-- HERO -->
+    <div class="page">
+      <div class="card hero-card">
+        <h1 class="page-title" style="font-size: 28px">
+          Smart Align – Wheels in Line, Data in Sync
+        </h1>
+        <p
+          style="
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 700px;
+            margin: auto;
+          "
+        >
+          A simple and powerful digital system for wheel alignment, balancing
+          and workshop job management.
+        </p>
 
-  <div class="auth-footer">
-    Don’t have an account?
-    <a href="signup.html" style="color:var(--primary);font-weight:600">
-      Create Account
-    </a>
-  </div>
+        <div class="actions" style="justify-content: center; margin-top: 24px">
+          <a href="signup.html" class="btn btn-primary">Start Free</a>
+          <a href="login.html" class="btn btn-outline">Login</a>
+        </div>
+      </div>
 
-</div>
+      <!-- FEATURES -->
+      <div class="grid-3">
+        <div class="card">
+          <h3>🚗 Data Management</h3>
+          <p>
+            Create, edit and track data cards easily without registers or Excel.
+          </p>
+        </div>
 
-<script src="script.js"></script>
-</body>
+        <div class="card">
+          <h3>👨‍🔧 Advisor & Technician Tracking</h3>
+          <p>Assign jobs, track performance and improve accountability.</p>
+        </div>
+
+        <div class="card">
+          <h3>📊 Organized Records</h3>
+          <p>All alignment & balancing data stored safely in the cloud.</p>
+        </div>
+
+        <div class="card">
+          <h3>🔍 Fast Search</h3>
+          <p>Search by vehicle number, job card or advisor name instantly.</p>
+        </div>
+
+        <div class="card">
+          <h3>☁️ Cloud Based</h3>
+          <p>Access your data anytime from mobile, tablet or computer.</p>
+        </div>
+
+        <div class="card">
+          <h3>🔐 Secure System</h3>
+          <p>Your workshop data is protected with secure login.</p>
+        </div>
+      </div>
+
+      <!-- WHO -->
+      <div class="card">
+        <h2>Who Should Use Smart Align?</h2>
+        <ul style="line-height: 1.8">
+          <li>Wheel Alignment & Balancing Centers</li>
+          <li>Car Service Workshops</li>
+          <li>Multi-branch Service Stations</li>
+          <li>Small & Medium Garage Owners</li>
+        </ul>
+      </div>
+
+      <!-- HOW -->
+      <div class="card">
+        <h2>How It Works</h2>
+        <ol style="line-height: 1.8">
+          <li>Create your free account</li>
+          <li>Login to dashboard</li>
+          <li>Add job cards & vehicle data</li>
+          <li>Search, manage & grow your business</li>
+        </ol>
+      </div>
+
+      <!-- CTA -->
+      <div class="card" style="text-align: center">
+        <h2>Stop Using Paper Registers</h2>
+        <p>Start managing your workshop the smart way.</p>
+        <a href="signup.html" class="btn btn-primary" style="margin-top: 16px"
+          >Create Free Account</a
+        >
+      </div>
+
+      <!-- FOOTER -->
+      <div class="card" style="text-align: center">
+        <p style="color: var(--muted)">
+          📧 smartalignbiz@gmail.com <br />
+          © 2026 Smart Align. All rights reserved.
+        </p>
+      </div>
+    </div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+      }
+    </script>
+
+    <script src="script.js?v=2"></script>
+  </body>
 </html>

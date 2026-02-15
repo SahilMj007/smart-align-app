@@ -1,59 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Signup</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="auth-page">
+  <head>
+    <title>Signup | Smart Align – Create Account</title>
+    <link rel="canonical" href="https://smartalignbiz.netlify.app/signup.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
 
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <meta name="robots" content="index, follow" />
+  </head>
+  <body class="auth-page">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
 
-<!-- 🔄 Loader -->
-<div id="globalLoader" class="spinner">
-  <div class="loader-box">
-    <div class="loader"></div>
-    <p>Loading, please wait...</p>
-  </div>
-</div>
+    <!-- 🔄 Loader -->
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
+    </div>
 
+    <div class="auth-container">
+      <h1 class="page-title" style="text-align:center">Create Your Smart Align Account</h1>
+      <p>Signup to start using the system</p>
 
+      <label>Name</label>
+      <input id="name" placeholder="Full name" />
 
-<div class="auth-container">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="Email address" />
 
-  <h2 class="page-title" style="text-align:center">Create Account</h2>
-  <p>Signup to start using the system</p>
+      <label>Phone Number</label>
+      <input id="phone" type="tel" placeholder="10 digit mobile number" />
 
-  <label>Name</label>
-  <input id="name" placeholder="Full name">
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Strong password" />
 
-  <label>Email</label>
-  <input id="email" type="email" placeholder="Email address">
+      <button class="btn btn-primary" type="button" onclick="sendOTP(this)">
+        Send OTP
+      </button>
 
-  <label>Phone Number</label>
-  <input id="phone" type="tel" placeholder="10 digit mobile number">
+      <div id="otpBox" style="display: none">
+        <label>Enter OTP</label>
+        <input id="otpInput" placeholder="6 digit OTP" />
+        <button class="btn btn-primary" onclick="verifyOTP()">
+          Verify OTP
+        </button>
+      </div>
 
+      <div class="auth-footer">
+        Already have account?
+        <a href="index.html" style="color: var(--primary); font-weight: 600">
+          Login
+        </a>
+      </div>
+    </div>
 
-  <label>Password</label>
-  <input id="password" type="password" placeholder="Strong password">
-
-  <button class="btn btn-primary" type="button" onclick="sendOTP(this)">Send OTP</button>
-
-  <div id="otpBox" style="display:none">
-    <label>Enter OTP</label>
-    <input id="otpInput" placeholder="6 digit OTP">
-    <button class="btn btn-primary" onclick="verifyOTP()">Verify OTP</button>
-  </div>
-
-  <div class="auth-footer">
-    Already have account?
-    <a href="index.html" style="color:var(--primary);font-weight:600">
-      Login
-    </a>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

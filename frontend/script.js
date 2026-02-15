@@ -1,5 +1,10 @@
 let DB_SERVICES = [];
 let servicesLoaded = false;
+let currentLimit = 25;
+let currentPage = 1;
+let totalJobs = 0;
+let currentSearch = "";
+
 const API_BASE =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("127.0.0.1")
@@ -7,14 +12,10 @@ const API_BASE =
     : "https://smart-align-app.onrender.com";
 
 
-
-async function getAllJobsFromDB() {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`${API_BASE}/api/jobs`, {
-    headers: { Authorization: "Bearer " + token },
-  });
-  return await res.json();
+function UC(v) {
+  return typeof v === "string" ? v.toUpperCase() : v;
 }
+
 
 /********************************
  OTP & SIGNUP LOGIC (FIXED)
@@ -105,7 +106,7 @@ async function verifyOTP() {
     }
 
     alert("Account created successfully! Please login.");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   } catch (err) {
     alert("Server error");
   } finally {
@@ -117,7 +118,10 @@ async function verifyOTP() {
  ADMIN LOGIN (FIXED)
 *********************************/
 function adminLogin() {
-  if (loginEmail.value === "superadmin" && loginPassword.value === "super$135") {
+  if (
+    loginEmail.value === "superadmin" &&
+    loginPassword.value === "super$135"
+  ) {
     localStorage.setItem("isAdmin", "true");
     localStorage.setItem("token", "ADMIN_TOKEN"); // 👈 ADD THIS
     location.href = "admin.html";
@@ -125,7 +129,6 @@ function adminLogin() {
     alert("Invalid Admin Credentials");
   }
 }
-
 
 /********************************
  ADMIN – SERVICE PRICE MANAGEMENT
@@ -243,7 +246,7 @@ async function saveJob() {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Login expired, please login again");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
     return;
   }
 
@@ -254,10 +257,10 @@ async function saveJob() {
   }
 
   const job = {
-    vehicle: vehicleNo.value,
-    jobCard: jobCardNo.value,
-    advisor: advisor.value,
-    technician: technician.value,
+    vehicle: UC(vehicleNo.value),
+    jobCard: UC(jobCardNo.value),
+    advisor: UC(advisor.value),
+    technician: UC(technician.value),
 
     frontBalancing: frontBalancing.checked,
     rearBalancing: rearBalancing.checked,
@@ -283,6 +286,10 @@ async function saveJob() {
         ? editTime.value
         : now.toTimeString().slice(0, 5),
   };
+
+  saveNameToLocalStorage("advisor", advisor.value);
+  saveNameToLocalStorage("technician", technician.value);
+
 
   try {
     const url = editId
@@ -316,52 +323,64 @@ async function saveJob() {
   }
 }
 
-async function loadJobs() {
+async function loadJobs(page = 1) {
   const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "index.html";
-    return;
-  }
 
-  try {
-    const res = await fetch(`${API_BASE}/api/jobs`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+  const res = await fetch(
+    `${API_BASE}/api/jobs?page=${page}&limit=${currentLimit}&search=${currentSearch}`,
+    {
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
 
-    const jobs = await res.json();
-    const tbody = document.getElementById("jobTableBody");
-    tbody.innerHTML = "";
+  const data = await res.json();
 
-    jobs.forEach((j, i) => {
-      const tr = document.createElement("tr");
+  currentPage = data.page;
+  totalJobs = data.total;
 
-      tr.innerHTML = `
-  <td>${j.vehicle}</td>
-  <td>${j.jobCard}</td>
-  <td>${j.advisor}</td>
-  <td>${j.technician}</td>
-  <td>${j.frontPrice}</td>
-  <td>${j.rearPrice}</td>
-  <td>${j.shockerPrice}</td>
-  <td>${j.amountWithoutGST || 0}</td>
-  <td>${j.gstAmount || 0}</td>
-  <td>${j.totalAmount || 0}</td>
-  <td>${j.entryDate}</td>
-  <td>${j.entryTime}</td>
-  <td>
-    <button onclick="editJob('${j._id}')" class="btn btn-outline">Edit</button>
-    <button onclick="deleteJob('${j._id}')" class="btn btn-danger">Delete</button>
-  </td>
-`;
-
-      tbody.appendChild(tr);
-    });
-  } catch (err) {
-    alert("Error loading jobs");
-  }
+  renderJobs(data.jobs);
+  updateTableInfo(data.total);
 }
+
+
+
+function renderJobs(jobs) {
+  const tbody = document.getElementById("jobTableBody");
+  tbody.innerHTML = "";
+
+  jobs.forEach((j) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${j.vehicle}</td>
+      <td>${j.jobCard}</td>
+      <td>${j.advisor}</td>
+      <td>${j.technician}</td>
+      <td>${j.frontPrice}</td>
+      <td>${j.rearPrice}</td>
+      <td>${j.shockerPrice}</td>
+      <td>${j.amountWithoutGST || 0}</td>
+      <td>${j.gstAmount || 0}</td>
+      <td>${j.totalAmount || 0}</td>
+      <td>${j.entryDate}</td>
+      <td>${j.entryTime}</td>
+      <td>
+        <button onclick="editJob('${j._id}')" class="btn btn-outline">Edit</button>
+        <button onclick="deleteJob('${j._id}')" class="btn btn-danger">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+
+
+function changeLimit() {
+  currentLimit = Number(document.getElementById("rowLimit").value);
+  loadJobs(1);
+}
+
+
+
 
 async function deleteJob(id) {
   if (!confirmAdminPassword()) return;
@@ -481,10 +500,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let editIndex = localStorage.getItem("editIndex");
 
   if (editData && editIndex !== null) {
-    vehicleNo.value = editData.vehicle;
+    vehicleNo.value = UC(editData.vehicle);
     jobCardNo.value = editData.jobCard;
-    advisor.value = editData.advisor;
-    technician.value = editData.technician;
+    advisor.value = UC(editData.advisor);
+    technician.value = UC(editData.technician);
 
     frontBalancing.checked = editData.frontBalancing;
     rearBalancing.checked = editData.rearBalancing;
@@ -539,7 +558,10 @@ async function saveIncentives() {
 
 async function loadIncentives() {
   const token = localStorage.getItem("token");
-
+  if (!token) {
+    alert("Session expired. Please login again.");
+    return;
+  }
   const res = await fetch(`${API_BASE}/api/incentives`, {
     headers: {
       Authorization: "Bearer " + token,
@@ -558,11 +580,15 @@ async function loadIncentives() {
 async function loadIncentiveReport() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_BASE}/api/jobs`, {
+const res = await fetch(
+  `${API_BASE}/api/jobs/export/all`,
+  {
     headers: { Authorization: "Bearer " + token },
-  });
+  }
+);
 
-  let jobs = await res.json();
+let jobs = await res.json();
+
 
   const period = document.getElementById("period").value;
   const today = new Date();
@@ -669,20 +695,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function searchJob() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let rows = document.querySelectorAll("#jobTableBody tr");
-
-  rows.forEach((row) => {
-    let vehicle = row.children[0].innerText.toLowerCase();
-    let jobcard = row.children[1].innerText.toLowerCase();
-
-    if (vehicle.includes(input) || jobcard.includes(input)) {
-      row.style.display = "";
-    } else {
-      row.style.display = "none";
-    }
-  });
+  currentSearch = document.getElementById("searchInput").value;
+  loadJobs(1);
 }
+
+
 
 function clearSearchAndBack() {
   document.getElementById("searchInput").value = "";
@@ -726,6 +743,15 @@ function exportIncentiveExcel() {
   document.body.removeChild(a);
 }
 
+function updateTableInfo(total) {
+  const info = document.getElementById("tableInfo");
+  if (!info) return;
+
+  let showing = Math.min(currentLimit, total);
+  info.innerText = `Showing 1 to ${showing} of ${total} entries`;
+}
+
+
 function toggleMobileMenu() {
   const menu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("mobileMenuOverlay");
@@ -738,7 +764,6 @@ function toggleMobileMenu() {
     overlay.style.display = "none";
   }
 }
-
 
 function togglePerformanceView() {
   document.getElementById("chartBox").style.display = "block";
@@ -757,12 +782,15 @@ async function loadSelectedPerformance() {
 
   const period = document.getElementById("period").value;
   const token = localStorage.getItem("token");
-
-  const res = await fetch(`${API_BASE}/api/jobs`, {
+const res = await fetch(
+  `${API_BASE}/api/jobs/export/all`,
+  {
     headers: { Authorization: "Bearer " + token },
-  });
+  }
+);
 
-  let jobs = await res.json();
+let jobs = await res.json();
+
 
   const today = new Date();
   let start, end;
@@ -907,7 +935,17 @@ async function exportCustomData() {
   const from = document.getElementById("fromDate")?.value;
   const to = document.getElementById("toDate")?.value;
 
-  let jobs = await getAllJobsFromDB();
+  const exportRes = await fetch(
+  `${API_BASE}/api/jobs/export/all?from=${from}&to=${to}&search=${currentSearch}`,
+  {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  }
+);
+
+let jobs = await exportRes.json();
+
 
   // DATE FILTER (FIXED)
   if (from) {
@@ -929,35 +967,67 @@ async function exportCustomData() {
   let csv = [];
 
   // HEADER (uppercase)
-  csv.push(selected.map((h) => h.toUpperCase()).join(","));
+  const headerMap = {
+  sno: "S.NO.",
+  date: "Date",
+  jobCard: "J.C No.",
+  advisor: "Sup. Name",
+  technician: "Tech. Name",
+  front: "102036",
+  rear: "102037",
+  align: "102012+13",
+  vehicle: "Vehicle No.",
+  total: "Total Amount"
+};
+
+csv.push(selected.map((c) => headerMap[c]).join(","));
+
 
   jobs.forEach((j, i) => {
-    let row = [];
 
-    selected.forEach((col) => {
-      if (col === "sno") row.push(i + 1);
-      if (col === "advisor") row.push(j.advisor || "");
-      if (col === "jobCard") row.push(j.jobCard || "");
-      if (col === "vehicle") row.push(j.vehicle || "");
-      if (col === "technician") row.push(j.technician || "");
-      if (col === "date") row.push(j.entryDate || "");
-      if (col === "total") row.push(j.totalAmount || 0);
+  // 🔍 CHECK IF THIS JOB HAS ANY SELECTED VEHICLE DATA
+  let hasVehicleData = false;
 
-      // SERVICE PRICE (NOT YES/NO)
-      if (col === "front") row.push(j.frontPrice || 0);
-      if (col === "rear") row.push(j.rearPrice || 0);
-      if (col === "align") row.push(j.shockerPrice || 0);
-    });
+  if (selected.includes("front") && j.frontPrice > 0) hasVehicleData = true;
+  if (selected.includes("rear") && j.rearPrice > 0) hasVehicleData = true;
+  if (selected.includes("align") && j.shockerPrice > 0) hasVehicleData = true;
 
-    csv.push(row.join(","));
+  // ❌ SKIP ROW IF NO DATA FOR SELECTED VEHICLES
+  if (
+    (selected.includes("front") ||
+     selected.includes("rear") ||
+     selected.includes("align")) &&
+    !hasVehicleData
+  ) {
+    return; // ⛔ skip this job
+  }
+
+  let row = [];
+
+  selected.forEach((col) => {
+    if (col === "sno") row.push(i + 1);
+    if (col === "advisor") row.push(j.advisor || "");
+    if (col === "jobCard") row.push(j.jobCard || "");
+    if (col === "vehicle") row.push(j.vehicle || "");
+    if (col === "technician") row.push(j.technician || "");
+    if (col === "date") row.push(j.entryDate || "");
+    if (col === "total") row.push(j.totalAmount || "");
+
+    if (col === "front") row.push(j.frontPrice > 0 ? j.frontPrice : "");
+    if (col === "rear") row.push(j.rearPrice > 0 ? j.rearPrice : "");
+    if (col === "align") row.push(j.shockerPrice > 0 ? j.shockerPrice : "");
   });
+
+  csv.push(row.join(","));
+});
+
 
   if (csv.length === 1) {
     alert("No data found for selected date");
     return;
   }
 
-  const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+  const blob = new Blob(["\ufeff" + csv.join("\n")], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
@@ -980,6 +1050,8 @@ async function login() {
     return;
   }
 
+  showLoader(); // 🔄 START LOADER
+
   try {
     const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: "POST",
@@ -990,6 +1062,7 @@ async function login() {
     const data = await res.json();
 
     if (!res.ok) {
+      hideLoader();
       alert(data.message);
       return;
     }
@@ -1000,13 +1073,16 @@ async function login() {
     window.location.href = "dashboard.html";
   } catch (err) {
     alert("Server error");
+  } finally {
+    hideLoader();
   }
 }
 
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  window.location.href = "index.html";
+  localStorage.removeItem("isAdmin");
+  window.location.href = "login.html";
 }
 
 async function loadEditJob() {
@@ -1056,11 +1132,15 @@ async function exportPerformanceExcel() {
   const period = document.getElementById("period").value;
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_BASE}/api/jobs`, {
+  const res = await fetch(
+  `${API_BASE}/api/jobs/export/all`,
+  {
     headers: { Authorization: "Bearer " + token },
-  });
+  }
+);
 
-  let jobs = await res.json();
+let jobs = await res.json();
+
 
   // ---- DATE FILTER ----
   const today = new Date();
@@ -1202,19 +1282,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 async function sendResetLink() {
   const email = document.getElementById("forgotEmail").value;
-
   if (!email) return alert("Enter email");
 
-  const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email })
-  });
+  showLoader(); // 🔄 START LOADER
 
-  const data = await res.json();
-  alert(data.message);
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+    alert(data.message);
+  } catch (err) {
+    alert("Server error");
+  } finally {
+    hideLoader();
+  }
 }
 
 async function resetPassword() {
@@ -1230,11 +1318,56 @@ async function resetPassword() {
   const res = await fetch(`${API_BASE}/api/auth/reset-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token, password: p1 })
+    body: JSON.stringify({ token, password: p1 }),
   });
 
   const data = await res.json();
   alert(data.message);
 
-  if (res.ok) window.location.href = "index.html";
+  if (res.ok) window.location.href = "login.html";
 }
+
+function saveNameToLocalStorage(type, name) {
+  if (!name) return;
+
+  let key = type === "advisor" ? "advisorNames" : "technicianNames";
+
+  let list = JSON.parse(localStorage.getItem(key) || "[]");
+
+  name = name.toUpperCase();
+
+  if (!list.includes(name)) {
+    list.push(name);
+    localStorage.setItem(key, JSON.stringify(list));
+  }
+}
+
+function loadNameSuggestions() {
+  const advisorList = document.getElementById("advisorList");
+  const technicianList = document.getElementById("technicianList");
+
+  let advisors = JSON.parse(localStorage.getItem("advisorNames") || "[]");
+  let technicians = JSON.parse(localStorage.getItem("technicianNames") || "[]");
+
+  advisorList.innerHTML = "";
+  technicianList.innerHTML = "";
+
+  advisors.forEach(name => {
+    let option = document.createElement("option");
+    option.value = name;
+    advisorList.appendChild(option);
+  });
+
+  technicians.forEach(name => {
+    let option = document.createElement("option");
+    option.value = name;
+    technicianList.appendChild(option);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("advisorList")) {
+    loadNameSuggestions();
+  }
+});
+

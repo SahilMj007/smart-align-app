@@ -1,20 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Performance</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-  if (!localStorage.getItem("token")) {
-    window.location.href = "index.html";
-  }
-</script>
+  <head>
+    <title>Performance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      if (!localStorage.getItem("token")) {
+        window.location.href = "index.html";
+      }
+    </script>
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
 
-</head>
-<body>
-
-  <div class="navbar">
+    <meta name="robots" content="index, follow" />
+  </head>
+  <body>
+    <div class="navbar">
       <div class="nav-left">
         <span class="logo">Smart Align</span>
       </div>
@@ -48,62 +58,66 @@
       <button class="danger" onclick="logout()">Logout</button>
     </div>
 
-<div id="globalLoader" class="spinner">
-  <div class="loader-box">
-    <div class="loader"></div>
-    <p>Loading, please wait...</p>
-  </div>
-</div>
-
-
-<div class="page">
-  <div class="card">
-
-    <h2 class="page-title">Performance Dashboard</h2>
-
-    <!-- FILTERS -->
-    <div class="grid-3">
-      <select id="performanceType" onchange="togglePerformanceView()">
-        <option value="">Select Performance Type</option>
-        <option value="technician">Technician Performance</option>
-        <option value="advisor">Advisor Performance</option>
-        <option value="service">Service Performance</option>
-        <option value="incentive">Incentive Per Move</option>
-      </select>
-
-      <select id="period" onchange="loadSelectedPerformance()">
-        <option value="day">Today</option>
-        <option value="week">This Week</option>
-        <option value="month">This Month</option>
-        <option value="year">This Year</option>
-      </select>
-
-      <button class="btn btn-primary" onclick="loadSelectedPerformance()">View</button>
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
     </div>
 
-    <div id="loadingSpinner" class="spinner" style="display:none">
-  <div class="loader"></div>
-  <p>Loading data...</p>
-</div>
+    <div class="page">
+      <div class="card">
+        <h2 class="page-title">Performance Dashboard</h2>
 
+        <!-- FILTERS -->
+        <div class="grid-3">
+          <select id="performanceType" onchange="togglePerformanceView()">
+            <option value="">Select Performance Type</option>
+            <option value="technician">Technician Performance</option>
+            <option value="advisor">Advisor Performance</option>
+            <option value="service">Service Performance</option>
+            <option value="incentive">Incentive Per Move</option>
+          </select>
 
-    <!-- CHART CONTAINER -->
-   <div id="chartBox" class="chart-card" style="display:none">
-  <canvas id="performanceChart"></canvas>
-</div>
+          <select id="period" onchange="loadSelectedPerformance()">
+            <option value="day">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
 
-    
+          <button class="btn btn-primary" onclick="loadSelectedPerformance()">
+            View
+          </button>
+        </div>
 
-    <div class="actions">
-      <button class="btn btn-outline" onclick="location.href='dashboard.html'">⬅ Back</button>
-      <button class="btn btn-primary" onclick="exportPerformanceExcel()">Export Excel</button>
-      <button class="btn btn-primary" onclick="exportChartImage()">Export Image</button>
+        <div id="loadingSpinner" class="spinner" style="display: none">
+          <div class="loader"></div>
+          <p>Loading data...</p>
+        </div>
+
+        <!-- CHART CONTAINER -->
+        <div id="chartBox" class="chart-card" style="display: none">
+          <canvas id="performanceChart"></canvas>
+        </div>
+
+        <div class="actions">
+          <button
+            class="btn btn-outline"
+            onclick="location.href = 'dashboard.html'"
+          >
+            ⬅ Back
+          </button>
+          <button class="btn btn-primary" onclick="exportPerformanceExcel()">
+            Export Excel
+          </button>
+          <button class="btn btn-primary" onclick="exportChartImage()">
+            Export Image
+          </button>
+        </div>
+      </div>
     </div>
-    
 
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

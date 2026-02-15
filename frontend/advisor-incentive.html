@@ -3,15 +3,22 @@
   <head>
     <title>Advisor Incentive Report</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
     <link rel="stylesheet" href="style.css" />
-    <script>
-      if (!localStorage.getItem("isAdmin")) {
-        window.location.href = "index.html";
-      }
-    </script>
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
+
+    <meta name="robots" content="index, follow" />
   </head>
   <body>
-     <div class="navbar">
+    <div class="navbar">
       <div class="nav-left">
         <span class="logo">Smart Align</span>
       </div>
@@ -98,8 +105,20 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-      loadIncentiveReport();
-    </script>
+ <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    loadIncentiveReport();
+  });
+</script>
+
+
+
   </body>
 </html>

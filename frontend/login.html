@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Login | Smart Align – Data Management System</title>
+    <link rel="canonical" href="https://smartalignbiz.netlify.app/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
+
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Smart Align – Data Management System">
+<meta property="og:description" content="Manage wheel alignment & balancing jobs, advisors, technicians and billing with Smart Align.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smartalignbiz.netlify.app/">
+<meta property="og:image" content="https://smartalignbiz.netlify.app/promologo.png">
+  </head>
+  <body class="auth-page">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <div class="auth-container">
+      <h1 class="page-title" style="text-align: center">
+        Smart Align – Login
+      </h1>
+      <p>Login to continue</p>
+      <form
+        onsubmit="
+          event.preventDefault();
+          login();
+        "
+      >
+        <label>Email</label>
+        <input id="loginEmail" placeholder="Enter your email" />
+
+        <label>Password</label>
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Enter your password"
+        />
+
+        <div style="text-align: center; margin-top: 5px">
+          <a href="forgot.html" style="color: var(--primary); font-size: 14px">
+            Forgot password?
+          </a>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Login</button>
+          <button class="btn btn-outline" onclick="adminLogin()">
+            Admin Login
+          </button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        Don’t have an account?
+        <a href="signup.html" style="color: var(--primary); font-weight: 600">
+          Create Account
+        </a>
+      </div>
+    </div>
+
+    <!-- 🔄 Global Loader -->
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

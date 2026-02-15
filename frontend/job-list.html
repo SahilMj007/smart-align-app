@@ -1,13 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Job List</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <head>
+    <title>Job List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon" />
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
 
-</head>
-<body>
-   <div class="navbar">
+    <meta name="robots" content="index, follow" />
+  </head>
+  <body>
+    <div class="navbar">
       <div class="nav-left">
         <span class="logo">Smart Align</span>
       </div>
@@ -40,114 +51,157 @@
       <button onclick="location.href = 'about.html'">About Us</button>
       <button class="danger" onclick="logout()">Logout</button>
     </div>
-  
-<div id="globalLoader" class="spinner">
-  <div class="loader-box">
-    <div class="loader"></div>
-    <p>Loading, please wait...</p>
-  </div>
-</div>
 
- 
-<div class="page">
-  <div class="card">
-
-    <h2 class="page-title">Saved Smart Data</h2>
-
-    <input
-  type="text"
-  id="searchInput"
-  placeholder="Search by Vehicle No or Job Card No"
-  onkeyup="searchJob()"
-/>
-<button class="btn btn-primary" onclick="toggleExportPanel()">
-  📤 Export
-</button>
-
-
-<div id="exportPanel" class="export-panel" style="display:none">
-
-  <h3>Export Data</h3>
-
-  <div class="grid-2">
-    <div>
-      <label>From Date</label>
-      <input type="date" id="fromDate">
-    </div>
-    <div>
-      <label>To Date</label>
-      <input type="date" id="toDate">
-    </div>
-  </div>
-
-  <div class="export-section">
-    <h4>Select Columns</h4>
-    <div class="export-columns">
-      <label><input type="checkbox" class="colExport" value="sno" checked> S.No</label>
-      <label><input type="checkbox" class="colExport" value="advisor"> Advisor</label>
-      <label><input type="checkbox" class="colExport" value="jobCard"> Job Card</label>
-      <label><input type="checkbox" class="colExport" value="front"> Front Wheel</label>
-      <label><input type="checkbox" class="colExport" value="rear"> Rear Wheel</label>
-      <label><input type="checkbox" class="colExport" value="align"> Alignment</label>
-      <label><input type="checkbox" class="colExport" value="vehicle"> Vehicle</label>
-      <label><input type="checkbox" class="colExport" value="technician"> Technician</label>
-      <label><input type="checkbox" class="colExport" value="date"> Date</label>
-      <label><input type="checkbox" class="colExport" value="total"> Total Amount</label>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn btn-primary" onclick="exportCustomData()">Export</button>
-    <button class="btn btn-outline" onclick="toggleExportPanel()">Cancel</button>
-  </div>
-
-</div>
-
-
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Vehicle</th>
-              <th>Job Card</th>
-              <th>Advisor</th>
-              <th>Technician</th>
-              <th>Front</th>
-              <th>Rear</th>
-              <th>Align</th>
-              <th>Without GST</th>
-              <th>GST</th>
-              <th>Total</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-      
-          <tbody id="jobTableBody">
-            <!-- rows injected by JS -->
-          </tbody>
-        </table>
+    <div id="globalLoader" class="spinner">
+      <div class="loader-box">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
       </div>
-
-    <div class="actions">
-      <button class="btn btn-outline" onclick="clearSearchAndBack()">⬅ Back</button>
     </div>
 
+    <div class="page">
+      <div class="card">
+        <h2 class="page-title">Saved Smart Data</h2>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by Vehicle No or Job Card No"
+          onkeyup="searchJob()"
+        />
+        <button class="btn btn-primary" onclick="toggleExportPanel()">
+          📤 Export
+        </button>
+
+        <div id="exportPanel" class="export-panel" style="display: none">
+          <h3>Export Data</h3>
+
+          <div class="grid-2">
+            <div>
+              <label>From Date</label>
+              <input type="date" id="fromDate" />
+            </div>
+            <div>
+              <label>To Date</label>
+              <input type="date" id="toDate" />
+            </div>
+          </div>
+
+          <div class="export-section">
+            <h4>Select Columns</h4>
+            <div class="export-columns">
+              <label
+                ><input type="checkbox" class="colExport" value="sno" checked />
+                S.No</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="advisor" />
+                Advisor</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="jobCard" /> Job
+                Card</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="front" /> Front
+                Wheel</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="rear" /> Rear
+                Wheel</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="align" />
+                Alignment</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="vehicle" />
+                Vehicle</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="technician" />
+                Technician</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="date" />
+                Date</label
+              >
+              <label
+                ><input type="checkbox" class="colExport" value="total" /> Total
+                Amount</label
+              >
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" onclick="exportCustomData()">
+              Export
+            </button>
+            <button class="btn btn-outline" onclick="toggleExportPanel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div class="table-topbar">
+  <div class="entries-box">
+    <label>Show</label>
+    <select id="rowLimit" onchange="changeLimit()">
+      <option value="10">10</option>
+      <option value="25" selected>25</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    <span>entries</span>
+  </div>
+
+  <div class="table-info" id="tableInfo">
+    Showing 1 to 25 entries
   </div>
 </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Vehicle</th>
+                <th>Job Card</th>
+                <th>Advisor</th>
+                <th>Technician</th>
+                <th>Front</th>
+                <th>Rear</th>
+                <th>Align</th>
+                <th>Without GST</th>
+                <th>GST</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-<script src="script.js"></script>
-<script>
-  const token = localStorage.getItem("token");
+            <tbody id="jobTableBody">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
 
-  if (!token) {
-    alert("Please login first");
-    window.location.href = "index.html";
-  } else {
-    loadJobs();
-  }
-</script>
+        <div class="actions">
+          <button class="btn btn-outline" onclick="clearSearchAndBack()">
+            ⬅ Back
+          </button>
+        </div>
+      </div>
+    </div>
 
-</body>
+    <script src="script.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first");
+        window.location.href = "index.html";
+      } else {
+        loadJobs();
+      }
+    </script>
+  </body>
 </html>

@@ -1,15 +1,27 @@
 <!doctype html>
 <html>
   <head>
-    <title>Dashboard</title>
+    <title>Dashboard | Smart Align</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/favicon.png" type="image/favicon">
     <link rel="stylesheet" href="style.css" />
     <script>
       const token = localStorage.getItem("token");
       if (!token) {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       }
     </script>
+    <meta
+      name="description"
+      content="Smart Align is a professional wheel balancing and alignment management system for workshops. Manage jobs, invoices, advisors and technicians easily."
+    />
+    <meta
+      name="keywords"
+      content="wheel alignment software, wheel balancing app, workshop management system, garage software, smart align, vehicle service app, data entry, hero connect, auto report maker"
+    />
+    <meta name="author" content="Smart Align" />
+
+    <meta name="robots" content="index, follow" />
   </head>
   <body>
     <div class="navbar">
@@ -68,11 +80,13 @@
           </div>
           <div>
             <label>Advisor Name</label>
-            <input id="advisor" placeholder="Advisor Name" />
+            <input id="advisor" list="advisorList" placeholder="Advisor Name" />
+            <datalist id="advisorList"></datalist>
           </div>
           <div>
             <label>Technician Name</label>
-            <input id="technician" placeholder="Technician Name" />
+            <input id="technician" list="technicianList"  placeholder="Technician Name" />
+            <datalist id="technicianList"></datalist>
           </div>
         </div>
 
