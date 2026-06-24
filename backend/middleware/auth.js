@@ -8,13 +8,11 @@ module.exports = async function (req, res, next) {
 
     const token = header.split(" ")[1];
 
-    // ✅ ALLOW ADMIN
     if (token === "ADMIN_TOKEN") {
       req.user = { id: "admin", role: "admin" };
       return next();
     }
 
-    // normal user
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id).select("-password");
 
