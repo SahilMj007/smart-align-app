@@ -22,10 +22,8 @@ app.use("/api/jobs", jobRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/incentives", incentiveRoutes);
 
-// DEBUG LINE (IMPORTANT)
 console.log("MONGO URI:", process.env.MONGO_URI ? "LOADED" : "NOT LOADED");
 
-// CONNECT TO MONGODB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
