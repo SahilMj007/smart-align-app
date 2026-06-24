@@ -2,9 +2,6 @@ const router = require("express").Router();
 const Service = require("../models/service");
 const auth = require("../middleware/auth");
 
-/* ===============================
-   GET SERVICES (SAFE)
-================================ */
 router.get("/", auth, async (req, res) => {
   try {
     const services = await Service.find();
@@ -15,9 +12,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-/* ===============================
-   SAVE / UPDATE SERVICE (SAFE)
-================================ */
+
 router.post("/", auth, async (req, res) => {
   try {
     if (!req.body.key) {
