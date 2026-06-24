@@ -4,9 +4,6 @@ const Job = require("../models/Job");
 const auth = require("../middleware/auth");
 const router = express.Router();
 
-/* ===============================
-   GET ALL JOBS
-================================ */
 router.get("/", auth, async (req, res) => {
   try {
     const filter =
@@ -48,9 +45,7 @@ res.json({
   }
 });
 
-/* ===============================
-   GET SINGLE JOB
-================================ */
+
 router.get("/:id", auth, async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).json({ message: "Invalid job ID" });
@@ -66,9 +61,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-/* ===============================
-   CREATE JOB
-================================ */
 router.post("/", auth, async (req, res) => {
   try {
     const job = await Job.create({
@@ -82,9 +74,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-/* ===============================
-   UPDATE JOB
-================================ */
 router.put("/:id", auth, async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).json({ message: "Invalid job ID" });
@@ -105,9 +94,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-/* ===============================
-   DELETE JOB
-================================ */
 router.delete("/:id", auth, async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).json({ message: "Invalid job ID" });
